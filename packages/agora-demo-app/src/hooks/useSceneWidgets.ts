@@ -11,6 +11,8 @@ export const useSceneWidgets = (
     | 'FcrBoardWidget'
     | 'FcrStreamMediaPlayerWidget'
     | 'FcrPolling'
+    | 'FcrRTTWidget'
+    | 'FcrRttboxWidget'
     | 'AgoraChatroomWidget'
     | 'FcrCountdownWidget'
     | 'FcrPopupQuizWidget'
@@ -39,6 +41,15 @@ export const useSceneWidgets = (
       if (ids.includes('FcrPolling')) {
         const { FcrPollingWidget } = widget;
         widgets[getWidgetName(FcrPollingWidget)] = FcrPollingWidget;
+      }
+     
+      if (ids.includes('FcrRTTWidget')) {
+        const { FcrRTTWidget } = widget;
+        widgets[getWidgetName(FcrRTTWidget)] = FcrRTTWidget;
+      }
+      if (ids.includes('FcrRttboxWidget')) {
+        const { FcrRttboxWidget } = widget;
+        widgets[getWidgetName(FcrRttboxWidget)] = FcrRttboxWidget;
       }
 
       if (ids.includes('AgoraChatroomWidget')) {

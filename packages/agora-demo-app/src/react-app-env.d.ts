@@ -22,7 +22,6 @@ interface Window {
   __launchArgs: any;
   __launchUIMode: string;
 }
-
 declare module 'agora-plugin-gallery/scene' {
   declare class FcrWebviewWidget extends (await import('agora-common-libs'))
     .FcrUISceneWidget {}
@@ -30,6 +29,10 @@ declare module 'agora-plugin-gallery/scene' {
     .FcrUISceneWidget {}
   declare class FcrPollingWidget extends (await import('agora-common-libs'))
     .FcrUISceneWidget {}
+    declare class FcrRttboxWidget extends (await import('agora-common-libs'))
+    .FcrUISceneWidget {}
+  declare class FcrRTTWidget extends (await import('agora-common-libs'))
+  .FcrUISceneWidget {}
   declare class FcrChatroom extends (await import('agora-common-libs')).FcrUISceneWidget {}
   declare class FcrStreamMediaPlayerWidget extends (await import('agora-common-libs'))
     .FcrUISceneWidget {}

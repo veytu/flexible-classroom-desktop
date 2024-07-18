@@ -35,6 +35,8 @@ export const LaunchPage = observer(() => {
     'FcrStreamMediaPlayerWidget',
     'FcrCountdownWidget',
     'FcrPopupQuizWidget',
+    'FcrRTTWidget',
+    'FcrRttboxWidget'
   ]);
 
   const { ready: sdkReady, sdk } = useFcrUIScene();

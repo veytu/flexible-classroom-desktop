@@ -185,6 +185,8 @@ export const FcrUISceneApp = () => {
   const { ready: widgetsReady, widgets } = useSceneWidgets([
     'FcrBoardWidget',
     'FcrPolling',
+    'FcrRTTWidget',
+    'FcrRttboxWidget',
     'AgoraChatroomWidget',
     'FcrWebviewWidget',
     'FcrStreamMediaPlayerWidget',
