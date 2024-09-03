@@ -45,6 +45,10 @@ export const LaunchPage = observer(() => {
   if (sceneType === SceneType.Scene) {
     return <FcrUISceneApp />;
   }
+
+  if (sceneType === SceneType.AIPEOPLE) {
+    return <FcrAiPeopleApp />;
+  }
   return <AgoraClassroomApp />;
 });
 
@@ -177,6 +181,75 @@ export const AgoraProctorApp = () => {
 };
 
 export const FcrUISceneApp = () => {
+  const homeStore = useContext(GlobalStoreContext);
+  const userStore = useContext(UserStoreContext);
+  const launchOption = homeStore.launchOption;
+  const appRef = useRef<HTMLDivElement | null>(null);
+  const history = useHistory();
+  const { ready: widgetsReady, widgets } = useSceneWidgets([
+    'FcrBoardWidget',
+    'FcrPolling',
+    'AgoraChatroomWidget',
+    'FcrWebviewWidget',
+    'FcrStreamMediaPlayerWidget',
+    'FcrCountdownWidget',
+    'FcrPopupQuizWidget',
+  ]);
+
+  const { ready: sdkReady, sdk } = useFcrUIScene();
+
+  useEffect(() => {
+    if (widgetsReady && sdkReady && sdk && appRef.current) {
+      const shareUrl = shareLink.generateUrl({
+        roomId: launchOption.roomUuid ?? '',
+        owner: userStore.nickName,
+        region: homeStore.region,
+        role: 2,
+      });
+      sdk.setParameters(
+        JSON.stringify({
+          shareUrl,
+          logo,
+          host: homeStore.launchOption.sdkDomain,
+          uiConfigs: homeStore.launchOption.scenes,
+          themes: homeStore.launchOption.themes,
+        }),
+      );
+
+      const unmount = sdk.launch(
+        appRef.current,
+        {
+          ...(launchOption as any),
+          widgets,
+          coursewareList: courseWareList,
+          virtualBackgroundImages,
+          virtualBackgroundVideos,
+          uiMode: homeStore.theme,
+          language: homeStore.language,
+          token: launchOption.rtmToken,
+          devicePretest: true,
+          recordUrl: `${REACT_APP_RECORDING_LINK_PREFIX}/scene_record_page.html`,
+        },
+        () => {
+          // success
+        },
+        (err: Error) => {
+          // failure
+        },
+        (type) => {
+          homeStore.blockQuitUnregister();
+          console.log('push location');
+          history.push(`${launchOption.returnToPath ?? '/'}?reason=${type}`);
+        },
+      );
+      return unmount;
+    }
+  }, [widgetsReady, sdkReady]);
+
+  return <div ref={appRef} id="app" className="fcr-w-screen fcr-h-screen"></div>;
+};
+
+export const FcrAiPeopleApp = () => {
   const homeStore = useContext(GlobalStoreContext);
   const userStore = useContext(UserStoreContext);
   const launchOption = homeStore.launchOption;

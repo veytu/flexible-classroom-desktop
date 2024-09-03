@@ -1,4 +1,4 @@
-import { SceneType } from '@app/type';
+import { RadioType, SceneType, TeacherImageType, TeachingSceneType } from '@app/type';
 import premiumIcon from '@app/assets/service-type/fcr_premium.png';
 import standardIcon from '@app/assets/service-type/fcr_standard.png';
 import dayjs, { Dayjs } from 'dayjs';
@@ -45,6 +45,11 @@ if (!isElectron()) {
     value: SceneType.Scene,
     className: 'card-purple',
   });
+  sceneTypeOptions.push({
+    label: 'fcr_home_label_class_mode_ai_class',
+    value: SceneType.AIPEOPLE,
+    className: 'card-purple',
+  });
 }
 
 export const serviceTypeOptions = [
@@ -59,6 +64,44 @@ export const serviceTypeOptions = [
     description: 'fcr_create_label_latency_Standard',
     value: 1 as AgoraLatencyLevel,
     icon: standardIcon,
+  },
+];
+//老师形象数组
+export const aiClassTeacherImageOptions = [
+  {
+    label: 'fcr_create_label_ai_people_teacher_image_none',
+    status: RadioType.ENABLE,
+    value: TeacherImageType.NONE,
+  },
+  {
+    label: 'fcr_create_label_ai_people_teacher_image_cartoon',
+    status: RadioType.WAIT_ON_LINE,
+    value: TeacherImageType.CARTOON,
+  },
+  {
+    label: 'fcr_create_label_ai_people_teacher_image_real',
+    status: RadioType.WAIT_ON_LINE,
+    value: TeacherImageType.REAL,
+  },
+];
+//教学场景数组
+export const aiClassTeacheingSceneOptions = [
+  {
+    label: 'fcr_create_label_ai_people_teaching_scene_practice_speak',
+    status: RadioType.ENABLE,
+    value: TeachingSceneType.PRACTICE_SPEAK,
+  },
+  {
+    label: 'fcr_create_label_ai_people_teaching_scene_face_to_face',
+    status: RadioType.WAIT_ON_LINE,
+    value: TeachingSceneType.FACE_TO_FACE,
+  },
+];
+//对话语言数组
+export const aiClassDialogueTypeOptions = [
+  {
+    text: 'fcr_create_label_ai_people_dialogue_type_en_us',
+    value: TeachingSceneType.PRACTICE_SPEAK.toString(),
   },
 ];
 

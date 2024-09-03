@@ -1,0 +1,60 @@
+.radio-text-card {
+  @apply fcr-relative fcr-flex fcr-flex-col fcr-justify-center fcr-items-center fcr-cursor-pointer;
+  /* fcr-white */
+  background: #ffffff;
+  /* fcr-light-web-line 0 */
+  border: 1px solid #dbdfec;
+  border-radius: 16px;
+  top: 0;
+  transition: top 0.15s linear;
+  padding: 22px 11px 22px 24px;
+  display: block;
+}
+
+.radio-text-card:hover {
+  top: -2px;
+  box-shadow: 5px 5px 30px -4px rgba(0, 0, 0, 0.14);
+}
+
+.radio-text-card.checked {
+  border-color: #000000;
+}
+.radio-text-card.disable {
+  border: 1px solid rgba(245, 245, 245, 1);
+  background: rgba(255, 255, 255, 1);
+}
+
+.radio-text-card .radio {
+  @apply fcr-absolute;
+  top: 22px;
+  right: 11px;
+}
+
+.radio-text-card .icon {
+  margin-bottom: 8px;
+}
+.radio-text-card .text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+.radio-text-card .text-disable {
+  color: var(--fcr_mobile_ui_scene_icontext3, rgba(187, 187, 187, 1));
+}
+.radio-text-card .wait-on-line {
+  @apply fcr-absolute;
+  top: 0px;
+  right: 0px;
+  height: 24px;
+  padding: 3px 10px 3px 10px;
+  border-radius: 0px 16px 0px 16px;
+  background: rgba(245, 245, 245, 1);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  color: rgba(151, 152, 174, 1);
+}

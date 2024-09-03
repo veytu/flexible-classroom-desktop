@@ -29,6 +29,7 @@ export const zhCn = {
   fcr_home_label_status_live: '进行中',
   fcr_home_label_status_over: '已结束',
   fcr_home_label_class_mode_cloud_class: '云课堂',
+  fcr_home_label_class_mode_ai_class: 'AI课堂',
   fcr_home_label_class_mode_webinar: '直播大讲堂',
   fcr_home_label_class_mode_small_classroom: '小班课堂',
   fcr_home_label_class_mode_lecture_hall: '大班课课堂',

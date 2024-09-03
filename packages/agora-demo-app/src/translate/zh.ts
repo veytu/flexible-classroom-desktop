@@ -288,4 +288,16 @@ export default {
     'content-c': `您可以自由选择是否使用本产品提供的服务，如果您下载、安装、使用本产品中所提供的服务，即表明您信任该产品所有人，上海兆言对任何原因在使用本产品中提供的服务时可能对您自身或他人造成的任何形式的损失和伤害不承担任何责任。`,
   },
   duration_in_mins: '{reason}分钟',
+
+
+  fcr_create_label_ai_people_group_title_teacher_image: '老师形象',
+  fcr_create_label_ai_people_group_title_teaching_scene: '教学场景',
+  fcr_create_label_ai_people_group_title_dialogue_type: '对话语音',
+  fcr_create_label_ai_people_teacher_image_none: '无形象',
+  fcr_create_label_ai_people_teacher_image_cartoon: '卡通形象',
+  fcr_create_label_ai_people_teacher_image_real: '真人形象',
+  fcr_create_label_ai_people_teaching_scene_practice_speak: 'AI口语对练',
+  fcr_create_label_ai_people_teaching_scene_face_to_face: 'AI面试',
+  fcr_create_label_ai_people_dialogue_type_en_us: 'English - US',
+  fcr_create_label_radio_type_wait_on_line_hint: '即将上线',
 };

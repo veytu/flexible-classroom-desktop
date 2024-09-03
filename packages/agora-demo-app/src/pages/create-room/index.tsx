@@ -28,12 +28,17 @@ import {
   computeEndTime,
   sceneTypeOptions,
   serviceTypeOptions,
+  aiClassTeacherImageOptions,
+  aiClassTeacheingSceneOptions,
+  aiClassDialogueTypeOptions,
   weekday,
 } from './helper';
 import { SceneType } from '@app/type';
 import type { AgoraRteMediaPublishState } from 'agora-rte-sdk';
 import { useRoomNameForm } from '@app/hooks/useRoomNameForm';
 import { studentLimit } from '@app/utils/constants';
+import { RadioTextCard } from './radio-text-card';
+import { Dropdown } from '@app/components/dropdown-new';
 export const CreateRoom = observer(() => {
   const roomStore = useContext(RoomStoreContext);
   const { setLoading } = useContext(GlobalStoreContext);
@@ -47,6 +52,12 @@ export const CreateRoom = observer(() => {
   const [sceneType, setSceneType] = useState(sceneTypeOptions[0].value);
 
   const [serviceType, setServiceType] = useState(serviceTypeOptions[0].value);
+  //Ai数字人-老师形象
+  const [teacherImage, setTeacherImage] = useState(aiClassTeacherImageOptions[0].value);
+  //Ai数字人-教学场景
+  const [teachingScene, setTeachingScene] = useState(aiClassTeacheingSceneOptions[0].value);
+  //Ai数字人-对话语言
+  const [dialogueType, setDialogueType] = useState(aiClassDialogueTypeOptions[0].value);
   const [watermark, setWatermark] = useState(false);
   const [livePlayback, setLivePlayback] = useState(false);
   const [useCurrentTime, setUseCurrentTime] = useState(true);
@@ -254,6 +265,7 @@ export const CreateRoom = observer(() => {
           userName: nickName,
         })
         .then((data) => {
+          debugger
           if (useCurrentTime) {
             return quickJoinRoom({
               roomId: data.roomId,
@@ -543,6 +555,57 @@ export const CreateRoom = observer(() => {
                   </div>
                 </div>
               ) : null}
+            </div>
+          </div>
+        ) : null}
+        {/* Ai数字人 */}
+        {sceneType === SceneType.AIPEOPLE ? (
+          <div className='form-item'>
+            <div className="item-mb ">
+              <div className="label">{transI18n('fcr_create_label_ai_people_group_title_teacher_image')}</div>
+              <div className="service-type">
+                {aiClassTeacherImageOptions.map((v) => {
+                  return (
+                    <RadioTextCard
+                      key={v.value + v.label}
+                      onClick={() => {
+                        setTeacherImage(v.value);
+                      }}
+                      checked={v.value === teacherImage}
+                      label={transI18n(v.label)}
+                      status={v.status}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className="item-mb ">
+              <div className="label">{transI18n('fcr_create_label_ai_people_group_title_teaching_scene')}</div>
+              <div className="service-type">
+                {aiClassTeacheingSceneOptions.map((v) => {
+                  return (
+                    <RadioTextCard
+                      key={v.value + v.label}
+                      onClick={() => {
+                        setTeachingScene(v.value);
+                      }}
+                      checked={v.value === teachingScene}
+                      label={transI18n(v.label)}
+                      status={v.status}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className="item-mb ">
+              <div className="label">{transI18n('fcr_create_label_ai_people_group_title_dialogue_type')}</div>
+              <div className="service-type">
+                <Dropdown
+                  options={aiClassDialogueTypeOptions.map(item => { return { value: item.value, text: transI18n(item.text) } })}
+                  onChange={(value) => { setDialogueType(value) }}
+                  size='large'
+                  value={dialogueType.toString()} />
+              </div>
             </div>
           </div>
         ) : null}

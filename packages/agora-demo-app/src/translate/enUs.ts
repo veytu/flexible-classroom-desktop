@@ -29,6 +29,7 @@ export const enUs = {
   fcr_home_label_status_live: 'Live',
   fcr_home_label_status_over: 'Closed',
   fcr_home_label_class_mode_cloud_class: 'Cloud Classroom',
+  fcr_home_label_class_mode_ai_class: 'Cloud Classroom',
   fcr_home_label_class_mode_webinar: 'Webinar',
   fcr_home_label_class_mode_small_classroom: 'Small Classroom',
   fcr_home_label_class_mode_lecture_hall: 'Lecture Hall',
