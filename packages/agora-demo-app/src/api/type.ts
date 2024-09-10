@@ -56,9 +56,10 @@ export type RoomCreateRequest = {
   roleConfigs?: {
     [key: number]: {
       limit: number;
-      defaultStream: {
+      defaultStream?: {
         audioState: 0 | 1;
         videoState: 0 | 1;
+        state: 0 | 1;
       };
     };
   };

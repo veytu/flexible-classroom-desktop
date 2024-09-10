@@ -66,18 +66,18 @@ export const Dropdown: FC<DropdownProps> = ({
   disabled,
 }) => {
   const [focused, setFocused] = useState(false);
-  const cls = classNames('fcr-dropdown', {
-    'fcr-dropdown--focused': focused,
-    'fcr-dropdown--disabled': disabled,
-    'fcr-dropdown-l': size === 'large',
-    'fcr-dropdown-m': size === 'medium',
-    'fcr-dropdown-s': size === 'small',
+  const cls = classNames('fcr-dropdown-new', {
+    'fcr-dropdown-new--focused': focused,
+    'fcr-dropdown-new--disabled': disabled,
+    'fcr-dropdown-new-l': size === 'large',
+    'fcr-dropdown-new-m': size === 'medium',
+    'fcr-dropdown-new-s': size === 'small',
   });
 
-  const wrapperCls = classNames('fcr-dropdown-wrapper', {
-    'fcr-dropdown-wrapper-l': size === 'large',
-    'fcr-dropdown-wrapper-m': size === 'medium',
-    'fcr-dropdown-wrapper-s': size === 'small',
+  const wrapperCls = classNames('fcr-dropdown-new-wrapper', {
+    'fcr-dropdown-new-wrapper-l': size === 'large',
+    'fcr-dropdown-new-wrapper-m': size === 'medium',
+    'fcr-dropdown-new-wrapper-s': size === 'small',
   });
 
   const handleClick = disabled
@@ -86,8 +86,8 @@ export const Dropdown: FC<DropdownProps> = ({
         setFocused(!focused);
       };
 
-  const optionsCls = classNames('fcr-dropdown__options', {
-    'fcr-dropdown__options--invisible': !focused,
+  const optionsCls = classNames('fcr-dropdown-new__options', {
+    'fcr-dropdown-new__options--invisible': !focused,
   });
 
   const ref = useClickAnywhere(() => {
@@ -100,8 +100,8 @@ export const Dropdown: FC<DropdownProps> = ({
     return { selectedText: selectedOption?.text ?? placeholder, isUnselected: !selectedOption };
   }, [value, options, placeholder]);
 
-  const selectedCls = classNames('fcr-dropdown__selected', {
-    'fcr-dropdown__selected--unselected': isUnselected,
+  const selectedCls = classNames('fcr-dropdown-new__selected', {
+    'fcr-dropdown-new__selected--unselected': isUnselected,
   });
 
   return (
@@ -109,13 +109,13 @@ export const Dropdown: FC<DropdownProps> = ({
       <div className={cls} onClick={handleClick} ref={ref}>
         <div className={selectedCls}>
           <span>{selectedText}</span>
-          <SvgImg className="fcr-dropdown__icon" type={SvgIconEnum.FCR_DROPDOWN} size={24} />
+          <SvgImg className="fcr-dropdown-new__icon" type={SvgIconEnum.FCR_DROPDOWN} size={24} />
         </div>
         {/* options */}
         <ul className={optionsCls}>
           {options?.map(({ text, value: ov }) => {
-            const optionCls = classNames('fcr-dropdown__option', {
-              'fcr-dropdown__option--active': value === ov,
+            const optionCls = classNames('fcr-dropdown-new__option', {
+              'fcr-dropdown-new__option--active': value === ov,
             });
 
             const handleClick = () => {

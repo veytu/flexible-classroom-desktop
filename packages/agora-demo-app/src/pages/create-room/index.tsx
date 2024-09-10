@@ -217,33 +217,39 @@ export const CreateRoom = observer(() => {
 
       const isProctoring = sceneType === SceneType.Proctoring;
       const isOnlineclass = sceneType === SceneType.Scene;
-      const roomProperties = isProctoring
+      const isAiClass = sceneType === SceneType.AIPEOPLE;
+      const roomProperties = isAiClass ? {
+        teacherImage, teachingScene, dialogueType, latencyLevel: serviceType,originSceneType:sceneType
+      } : isProctoring
         ? {
-            watermark,
-            examinationUrl: 'https://forms.clickup.com/8556478/f/853xy-21947/IM8JKH1HOOF3LDJDEB',
-            latencyLevel: serviceType,
-          }
+          watermark,
+          examinationUrl: 'https://forms.clickup.com/8556478/f/853xy-21947/IM8JKH1HOOF3LDJDEB',
+          latencyLevel: serviceType,
+        }
         : {
-            watermark,
-            boardBackgroundImage: classroomBackgroundImagePath,
-            latencyLevel: serviceType,
-          };
+          watermark,
+          boardBackgroundImage: classroomBackgroundImagePath,
+          latencyLevel: serviceType,
+        };
       const widgets = {};
       if (isOnlineclass) {
         set(widgets, 'netlessBoard.state', 0);
       }
-      const roleConfigs = isOnlineclass
-        ? {
-            2: {
-              limit: studentLimit,
-              defaultStream: {
-                audioState: 1 as AgoraRteMediaPublishState,
-                videoState: 1 as AgoraRteMediaPublishState,
-                state: 1 as AgoraRteMediaPublishState,
-              },
+      let roleConfigs = undefined;
+      if (isAiClass) {
+        roleConfigs = { 1: { limit: 0 } }
+      } else if (isOnlineclass) {
+        roleConfigs = {
+          2: {
+            limit: studentLimit,
+            defaultStream: {
+              audioState: 1 as AgoraRteMediaPublishState,
+              videoState: 1 as AgoraRteMediaPublishState,
+              state: 1 as AgoraRteMediaPublishState,
             },
           }
-        : undefined;
+        }
+      }
       const processes = isOnlineclass
         ? {
             handsUp: {
@@ -251,10 +257,10 @@ export const CreateRoom = observer(() => {
             },
           }
         : undefined;
-      const role = 1;
+      const role = isAiClass ? 2 : 1;
       roomStore
         .createRoom({
-          sceneType,
+          sceneType: isAiClass ? SceneType.OneOnOne : sceneType,
           roomName: name,
           startTime: dateTime.valueOf(),
           endTime: endDateTime.valueOf(),
@@ -265,7 +271,6 @@ export const CreateRoom = observer(() => {
           userName: nickName,
         })
         .then((data) => {
-          debugger
           if (useCurrentTime) {
             return quickJoinRoom({
               roomId: data.roomId,

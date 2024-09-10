@@ -20,6 +20,7 @@ export const LaunchPage = observer(() => {
   const homeStore = useContext(GlobalStoreContext);
   const history = useHistory();
   const launchOption = homeStore.launchOption;
+  const launchConfig = homeStore.launchConfig
 
   if (isEmpty(launchOption)) {
     console.log('Invalid launch option, nav to /');
@@ -45,8 +46,9 @@ export const LaunchPage = observer(() => {
   if (sceneType === SceneType.Scene) {
     return <FcrUISceneApp />;
   }
-
-  if (sceneType === SceneType.AIPEOPLE) {
+  //因为ai数字人使用的是1v1课堂模式，所以sceneType是0，但是其本身有页面，所以就要用房间属性进行配置使其进入指定的数字人页面
+  if (sceneType === SceneType.OneOnOne && launchConfig.userFlexProperties && launchConfig.userFlexProperties.originSceneType 
+    && SceneType.AIPEOPLE === launchConfig.userFlexProperties.originSceneType ) {
     return <FcrAiPeopleApp />;
   }
   return <AgoraClassroomApp />;

@@ -12,7 +12,10 @@ import { useNoAuthUser } from '@app/hooks/useNoAuthUser';
 import { studentLimit } from '@app/utils/constants';
 import type { AgoraRteMediaPublishState } from 'agora-rte-sdk';
 import set from 'lodash/set';
-import { classroomBackgroundImagePath } from '../create-room/helper';
+import { classroomBackgroundImagePath,
+  aiClassTeacherImageOptions,
+  aiClassTeacheingSceneOptions,
+  aiClassDialogueTypeOptions, } from '../create-room/helper';
 import { observer } from 'mobx-react';
 import { ErrorCode, messageError } from '@app/utils';
 const useForm = <T extends Record<string, unknown>>({
@@ -156,10 +159,11 @@ export const CreateForm: FC<{
 
   const handleSubmit = () => {
     if (validate() && onSubmit()) {
-      const role = 1;
+      const isOnlineclass = sceneType === SceneType.Scene;
+      const isAiClass = sceneType === SceneType.AIPEOPLE;
+      const role = isAiClass ? 2 : 1;
       const userId = md5(`${userName}-${role}`);
 
-      const isOnlineclass = sceneType === SceneType.Scene;
       const widgets = {};
       if (isOnlineclass) {
         set(widgets, 'netlessBoard.state', 0);
@@ -171,8 +175,11 @@ export const CreateForm: FC<{
             },
           }
         : undefined;
-      const roleConfigs = isOnlineclass
-        ? {
+        let roleConfigs = undefined;
+        if (isAiClass) {
+          roleConfigs = { 1: { limit: 0 } }
+        } else if (isOnlineclass) {
+          roleConfigs = {
             2: {
               limit: studentLimit,
               defaultStream: {
@@ -180,25 +187,31 @@ export const CreateForm: FC<{
                 videoState: 1 as AgoraRteMediaPublishState,
                 state: 1 as AgoraRteMediaPublishState,
               },
-            },
+            }
           }
-        : undefined;
+        }
 
       globalStore.setLoading(true);
       const isProctoring = sceneType === SceneType.Proctoring;
-      const roomProperties = isProctoring
+      const roomProperties = isAiClass ? {
+        teacherImage: aiClassTeacherImageOptions[0].value,
+        teachingScene: aiClassTeacheingSceneOptions[0].value,
+        dialogueType: aiClassDialogueTypeOptions[0].value,
+        latencyLevel: 2,
+        originSceneType:sceneType
+      } : isProctoring
         ? {
-            watermark: false,
-            examinationUrl: 'https://forms.clickup.com/8556478/f/853xy-21947/IM8JKH1HOOF3LDJDEB',
-            latencyLevel: 2,
-          }
+          watermark: false,
+          examinationUrl: 'https://forms.clickup.com/8556478/f/853xy-21947/IM8JKH1HOOF3LDJDEB',
+          latencyLevel: 2,
+        }
         : {
-            watermark: false,
-            boardBackgroundImage: classroomBackgroundImagePath,
-            latencyLevel: 2,
-          };
+          watermark: false,
+          boardBackgroundImage: classroomBackgroundImagePath,
+          latencyLevel: 2,
+        };
       createRoomNoAuth({
-        sceneType,
+        sceneType: isAiClass ? SceneType.OneOnOne : sceneType,
         widgets,
         roomName: roomName,
         roomProperties,

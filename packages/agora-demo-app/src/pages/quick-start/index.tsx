@@ -49,6 +49,10 @@ export const QuickStart = observer(() => {
       text: `${t('fcr_home_label_class_mode_cloud_class')}`,
       value: SceneType.Scene,
     },
+    {
+      text: `${t('fcr_home_label_class_mode_ai_class')}`,
+      value: SceneType.AIPEOPLE,
+    },
   ];
 
   const tabs = [
